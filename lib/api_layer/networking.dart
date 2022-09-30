@@ -64,14 +64,10 @@ Future<List<GetTicket>> fetchUserTicket(String user) async {
 }
 
 //function to update the ticket status
-Future<http.Response> postTicket(String ticketId, String status) async {
-  // var authUser = await _secureStorage.read(key: "user");
+Future<http.Response> updateTicket(String ticketId) async {
   var authToken = await _secureStorage.read(key: "token");
-  var operatorCode = await _secureStorage.read(key: "operator");
-  // print("Token from postTicket---->${authToken}");
-  // print("operator from postTicket---->${operatorCode}");
-  // print("user from postTicket---->${authUser}");
-
+  //var operatorCode = await _secureStorage.read(key: "operator");
+//  print("update ticket $operatorCode");
   return http.post(
     Uri.parse("${baseUrl}update_status/$ticketId"),
     headers: {
@@ -79,21 +75,9 @@ Future<http.Response> postTicket(String ticketId, String status) async {
       HttpHeaders.contentTypeHeader: "application/json"
     },
     body: jsonEncode(
-      <String, dynamic>{
-        "oparetor_id": operatorCode,
-        "status": "in-progress",
-      },
+      <String, String>{"oparetor_id": "J01KB427", "status": "in-progress"},
     ),
   );
-
-  // if (response.statusCode == 201) {
-  //   var result = await UserTicket.fromJson(json.decode(response.body));
-  //   print('result from postticket------>${result}');
-
-  //   return result;
-  // } else {
-  //   throw Exception('post ticket action loading failed!---------->');
-  // }
 }
 
 

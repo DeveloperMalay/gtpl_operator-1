@@ -19,6 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     getToken();
+    fetchTicketData();
     super.initState();
   }
 
@@ -156,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Container(
                   padding: const EdgeInsets.all(5),
-                  height: 400,
+                  height: 420,
                   width: 450,
                   child: const Ticket(),
                 ),

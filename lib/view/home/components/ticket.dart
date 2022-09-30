@@ -68,11 +68,19 @@ class _TicketState extends State<Ticket> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  data[index].issueType,
+                                  "issue: ${data[index].issueType}",
                                   // widget.issueTitle,
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
+                                    color: primaryColor,
+                                  ),
+                                ),
+                                Text(
+                                  " Status: ${data[index].status}",
+                                  //'TK No. 123456',
+                                  style: TextStyle(
+                                    fontSize: 14,
                                     color: primaryColor,
                                   ),
                                 ),

@@ -26,7 +26,6 @@ class _OperatorTicketViewState extends State<OperatorTicketView> {
   @override
   void initState() {
     futureData = fetchTicketData();
-    // futureData = searchApi.fetchTicketData();
     super.initState();
   }
 
@@ -109,7 +108,9 @@ class _OperatorTicketViewState extends State<OperatorTicketView> {
                               borderRadius: BorderRadius.circular(4),
                             ),
                             child: Text(
-                              data[index].isclosed == 0 ? 'Received' : "closed",
+                              data[index].isclosed == 0
+                                  ? data[index].status
+                                  : "closed",
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
@@ -146,36 +147,35 @@ class _OperatorTicketViewState extends State<OperatorTicketView> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         const SizedBox(height: 20),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  data[index].issueType,
-                                                  style: TextStyle(
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: primaryColor,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  'TK No. ${data[index].id}',
-                                                  style: TextStyle(
-                                                    fontSize: 14,
-                                                    color: primaryColor,
-                                                  ),
-                                                ),
-                                              ],
+                                            Text(
+                                              data[index].issueType,
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                                color: primaryColor,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 3,
                                             ),
                                             Text(
-                                              createdDate,
+                                              "date: $createdDate",
                                               style: TextStyle(
-                                                fontSize: 9.3,
-                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                                color: primaryColor,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 3,
+                                            ),
+                                            Text(
+                                              'TK No. ${data[index].id}',
+                                              style: TextStyle(
+                                                fontSize: 14,
                                                 color: primaryColor,
                                               ),
                                             ),
@@ -239,28 +239,50 @@ class _OperatorTicketViewState extends State<OperatorTicketView> {
                                                       BorderRadius.circular(5)),
                                               child: InkWell(
                                                 onTap: () {
+                                                  updateTicket(
+                                                    data[index].id,
+                                                  );
                                                   showDialog(
                                                       context: context,
-                                                      builder: (ctx) =>
-                                                          AlertDialog(
-                                                            content: SizedBox(
-                                                              height: 100,
-                                                              width: 100,
-                                                              child: Center(
-                                                                child: Text(
-                                                                  'You changed the ticket status to in-process',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color:
-                                                                        primaryColor,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                  ),
+                                                      builder: (context) {
+                                                        Future.delayed(
+                                                            const Duration(
+                                                              seconds: 1,
+                                                            ), () {
+                                                          Navigator.of(context)
+                                                              .pop(true);
+                                                        });
+                                                        return AlertDialog(
+                                                          content: SizedBox(
+                                                            height: 100,
+                                                            width: 100,
+                                                            child: Center(
+                                                              child: Text(
+                                                                'You changed the ticket status to in-process',
+                                                                style:
+                                                                    TextStyle(
+                                                                  color:
+                                                                      primaryColor,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
                                                                 ),
                                                               ),
                                                             ),
-                                                          ));
+                                                          ),
+                                                        );
+                                                      });
+                                                  setState(() {
+                                                    futureData =
+                                                        fetchTicketData();
+                                                  });
+                                                  Future.delayed(
+                                                      const Duration(
+                                                        seconds: 1,
+                                                      ), () {
+                                                    Navigator.of(context)
+                                                        .pop(true);
+                                                  });
                                                 },
                                                 child: Text(
                                                   'Change status',
