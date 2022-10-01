@@ -10,16 +10,17 @@ const baseUrl = "http://3.111.229.113:3000/";
 const _secureStorage = FlutterSecureStorage();
 
 //function to getting user token
-Future<Token> getToken() async {
+Future<Token> getToken(String operatorId) async {
   final response =
       await http.get(Uri.parse('${baseUrl}oparetorlogin/J01KB427'));
   var jsonResponse = json.decode(response.body);
   await _secureStorage.write(key: "token", value: jsonResponse["token"]);
+  await _secureStorage.write(key: "operator", value: operatorId);
   if (response.statusCode == 200) {
     Map<String, dynamic> jsonResponse = json.decode(response.body);
     return Token.fromJson(jsonResponse);
   } else {
-    throw Exception("Don't get any token ");
+    throw Exception("Don't get any token");
   }
 }
 
@@ -79,6 +80,8 @@ Future<http.Response> updateTicket(String ticketId) async {
     ),
   );
 }
+
+
 
 
 

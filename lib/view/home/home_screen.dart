@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:gtpl_operator/api_layer/networking.dart';
 import 'package:gtpl_operator/const/const.dart';
 import 'package:gtpl_operator/view/home/components/reminder.dart';
@@ -18,7 +19,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    getToken();
     fetchTicketData();
     super.initState();
   }

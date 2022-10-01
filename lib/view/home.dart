@@ -31,7 +31,6 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    getToken();
     super.initState();
   }
 
