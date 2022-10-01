@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gtpl_operator/api_layer/model/get_ticket_model.dart';
 import 'package:gtpl_operator/api_layer/networking.dart';
 import 'package:gtpl_operator/const/const.dart';
-import 'package:gtpl_operator/view/subscriber/subscreen/cable/components/service_rationg.dart';
+import 'package:gtpl_operator/view/subscriber/subscreen/cable/components/service_rating.dart';
 
 // ignore: must_be_immutable
 class OperatorTicketView extends StatefulWidget {
@@ -202,7 +202,9 @@ class _OperatorTicketViewState extends State<OperatorTicketView> {
                                             ),
                                           ),
                                         ),
-                                        const StarRating(),
+                                        StarRating(
+                                          ticketId: data[index].id,
+                                        ),
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
