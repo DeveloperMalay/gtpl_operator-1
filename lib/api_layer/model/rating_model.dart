@@ -1,4 +1,3 @@
-
 class Rating {
   Rating({
     required this.id,

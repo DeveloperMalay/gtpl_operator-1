@@ -132,6 +132,9 @@ class _OperatorTicketViewState extends State<OperatorTicketView> {
                         ),
                         child: InkWell(
                           onTap: () {
+                            setState(() {
+                              getRating();
+                            });
                             showDialog(
                               context: context,
                               builder: (context) {

@@ -83,18 +83,10 @@ Future<http.Response> updateTicket(String ticketId) async {
 }
 
 //function to get rating star
-Future<Rating> getRating(String ticketId) async {
+Future getRating() async {
   final response =
       await http.get(Uri.parse("${baseUrl}get/oparetor/rating/J01KB427"));
-  if (response.statusCode == 200) {
-    var jsonResponse = jsonDecode(response.body);
-    return jsonResponse
-        .map((data) => Rating.fromJson(data))
-        .where((e) => e['ticket_id'].contains(ticketId))
-        .toList();
-  } else {
-    throw Exception('Unexpected error occured!');
-  }
+  return response.body;
 }
 
 // class SearchApi {

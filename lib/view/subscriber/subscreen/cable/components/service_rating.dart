@@ -12,49 +12,52 @@ class StarRating extends StatefulWidget {
 
 class _StarRatingState extends State<StarRating> {
   double _rating = 0.0;
-  late final Future<Rating> ratingData;
-
+  List allRatings = [];
+  List filterRating = [];
   @override
   void initState() {
-    ratingData = getRating(widget.ticketId);
+    getRating().then((data) {
+      setState(() {
+        allRatings = filterRating = data;
+      });
+    });
+    filterData(widget.ticketId);
     super.initState();
+  }
+
+  void filterData(value) {
+    setState(() {
+      filterRating = allRatings
+          .where((rating) => rating['ticket_id'].contains(value.toString()))
+          .toList();
+    });
+    print(filterRating);
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<Rating>(
-        future: ratingData,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            Rating? data = snapshot.data;
-            return SizedBox(
-              height: 50,
-              child: Center(
-                child: RatingBar.builder(
-                  initialRating: data!.star.toDouble(),
-                  minRating: 1,
-                  direction: Axis.horizontal,
-                  allowHalfRating: true,
-                  itemCount: 5,
-                  itemSize: 20,
-                  itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                  itemBuilder: (context, _) => const Icon(
-                    Icons.star,
-                    color: Colors.amber,
-                  ),
-                  onRatingUpdate: (rating) {
-                    this._rating = rating;
-                    print(rating);
-                    print("variable rating ---> $_rating");
-                  },
-                ),
-              ),
-            );
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        });
+    return SizedBox(
+      height: 50,
+      child: Center(
+        child: RatingBar.builder(
+          initialRating: _rating,
+          minRating: 1,
+          direction: Axis.horizontal,
+          allowHalfRating: true,
+          itemCount: 5,
+          itemSize: 20,
+          itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+          itemBuilder: (context, _) => const Icon(
+            Icons.star,
+            color: Colors.amber,
+          ),
+          onRatingUpdate: (rating) {
+            setState(() {
+              _rating = rating;
+            });
+          },
+        ),
+      ),
+    );
   }
 }
